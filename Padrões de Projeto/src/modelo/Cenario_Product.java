@@ -7,6 +7,7 @@ public class Cenario_Product {
 	//Atributos
 	private String nome;
 	private ArrayList<Dispositivo> dispositivos;
+	private ArrayList<Sensor> sensores;
 	
 	
 	//Constutores
@@ -34,6 +35,10 @@ public class Cenario_Product {
 	
 	public void addDispositivo(Dispositivo d) {
 		dispositivos.add(d);
+	}
+	
+	public void addSensor(Sensor s) {
+		sensores.add(s);
 	}
 	
 	
