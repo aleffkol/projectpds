@@ -113,7 +113,7 @@ public class Tela_Cadastro extends JDialog {
 						//Cadastrando
 						try{
 							if(tp !=null) {
-							Usuario u = cadastrarUsuario(nome, idade, sexo);
+							Usuario u = tp.casa.cadastrarUsuario(nome, idade, sexo);
 							JOptionPane.showMessageDialog(null, "Usuário foi cadastrado!\n"+u);
 							tp.getUsuario(u);
 							dispose();
@@ -143,28 +143,5 @@ public class Tela_Cadastro extends JDialog {
 			}
 		}
 	}
-	//Métodos
-	public Usuario cadastrarUsuario(String nome, int idade, String sexo)throws Exception {
-		
-		if(nome.equals("")) {
-			throw new Exception("Digite um nome!");
-		}
-		else if(nome.length()<4) {
-			throw new Exception("Digite um nome de até no mínimo 4 caracteres.");
-		}
-		if(idade<=0 || idade>=100) {
-			throw new Exception("Informe uma idade válida!");
-		}
-		else if(sexo.equals("Masculino")) {
-			return new Usuario_Masculino(nome, idade, Sexo.M);
-		}
-		else{
-			return new Usuario_Feminino(nome, idade, Sexo.F);
-		}
-	}
-
-	
-	
-	
 
 }
