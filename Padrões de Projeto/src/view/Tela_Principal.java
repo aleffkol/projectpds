@@ -17,8 +17,8 @@ import java.awt.event.ActionEvent;
 public class Tela_Principal extends JFrame {
 
 	private JPanel contentPane;
-	public Fachada casa = new Fachada();
-	Tela_Cadastro tc = new Tela_Cadastro();
+//	public Fachada casa = new Fachada();
+//	Tela_Cadastro tc = new Tela_Cadastro();
 	public static Tela_Principal frame;
 	
 	/**
@@ -40,11 +40,7 @@ public class Tela_Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public String getUsuario(Usuario u) {
-		casa.adicionarUsuario(u);
-		return ""+u;
-		
-	}
+
 	public Tela_Principal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -56,9 +52,9 @@ public class Tela_Principal extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Usuario");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tc = new Tela_Cadastro();
-				tc.setVisible(true);
-				tc.Intent(frame);
+//				tc = new Tela_Cadastro();
+//				tc.setVisible(true);
+//				tc.Intent(frame);
 			}
 		});
 		mntmNewMenuItem.setBounds(12, 12, 127, 19);
@@ -67,7 +63,7 @@ public class Tela_Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("listar");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, ""+ casa.listarUsuarios());
+//				JOptionPane.showMessageDialog(null, ""+ casa.listarUsuarios());
 			}
 		});
 		mntmNewMenuItem_1.setBounds(143, 12, 127, 19);

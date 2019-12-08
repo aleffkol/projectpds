@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,11 +31,11 @@ public class Tela_Cadastro extends JDialog {
 	public JLabel lblSenha;
 	public JLabel lblNewLabel_1;
 	public JSpinner spIdade;
-	public JComboBox cmSexo;
+	public JComboBox<String> cmSexo;
 	public JLabel lblCadastro;
 	public JButton okButton;
 	
-	public Tela_Principal tp;
+	public static Tela_Casa_Inteligente tci;
 	/**
 	 * Launch the application.
 	 */
@@ -52,8 +53,8 @@ public class Tela_Cadastro extends JDialog {
 	 * Create the dialog.
 	 */
 	
-	public void Intent(Tela_Principal tp) {
-		this.tp = tp;
+	public void pegarIntent(Tela_Casa_Inteligente tci) {
+		this.tci = tci; 
 	}
 
 	public Tela_Cadastro() {
@@ -87,9 +88,9 @@ public class Tela_Cadastro extends JDialog {
 		spIdade.setBounds(106, 110, 48, 20);
 		contentPanel.add(spIdade);
 
-		cmSexo = new JComboBox();
+		cmSexo = new JComboBox<String>();
 		cmSexo.setToolTipText("");
-		cmSexo.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
+		cmSexo.setModel(new DefaultComboBoxModel<String>(new String[] {"Masculino", "Feminino"}));
 		cmSexo.setBounds(106, 146, 124, 24);
 		contentPanel.add(cmSexo);
 
@@ -112,15 +113,15 @@ public class Tela_Cadastro extends JDialog {
 						String sexo = (String)cmSexo.getSelectedItem();
 						//Cadastrando
 						try{
-							if(tp !=null) {
-							Usuario u = tp.casa.cadastrarUsuario(nome, idade, sexo);
+							if(tci !=null) {
+							Usuario u = tci.casa.cadastrarUsuario(nome, idade, sexo);
 							JOptionPane.showMessageDialog(null, "Usuário foi cadastrado!\n"+u);
-							tp.getUsuario(u);
+//							tp.getUsuario(u);
 							dispose();
 							}
 						}
 						catch(Exception e) {
-							JOptionPane.showMessageDialog(null, e.getMessage());
+							JOptionPane.showMessageDialog(null, "eita");
 						}
 
 					}
