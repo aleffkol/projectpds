@@ -11,6 +11,7 @@ public class Fachada {
 	public Fachada() {
 		this.usuarios = new ArrayList<Usuario>();
 		this.atuador = new Atuador();
+		this.cenarios = new ArrayList<Cenario_Product>();
 	}
 	//Métodos
 
@@ -75,16 +76,15 @@ public class Fachada {
 	
 	//Cenário
 	public Cenario_Product criarCenario(String nome)throws Exception {
-		Cenario_Builder cenarioConstrutor = new Cenario_Builder();
+		Cenario_Builder cb = new Cenario_Builder();
 		if(nome.equals("")) {
 			throw new Exception("Digite um nome!");
 		}
 		else if(nome.length()<4) {
 			throw new Exception("Digite um nome de até no mínimo 4 caracteres.");
 		}
-		cenarioConstrutor.nomeCenario(nome);
-		Cenario_Product cenario = cenarioConstrutor.gerarCenario();
-		return cenario;
+		cb.nomeCenario(nome);
+		return cb.gerarCenario();
 	}
 	public void adicionarDispositivoCenario(String nome) {
 	}

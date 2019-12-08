@@ -2,7 +2,7 @@ package modelo;
 
 public class Cenario_Builder {
 	//Atributos
-	Cenario_Product cenario;
+	Cenario_Product cenario = new Cenario_Product("");
 	
 	//Construtor
 	public Cenario_Builder() {}

@@ -1,21 +1,27 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 
+import modelo.Cenario_Builder;
+import modelo.Cenario_Product;
 import modelo.Fachada;
-import javax.swing.JList;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.AbstractListModel;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import javax.swing.ListSelectionModel;
 
 public class Tela_Casa_Inteligente extends JFrame {
 
@@ -26,7 +32,10 @@ public class Tela_Casa_Inteligente extends JFrame {
 	Tela_Cadastro tc = new Tela_Cadastro();
 	public static Tela_Casa_Inteligente frame;
 	public Fachada casa = new Fachada();
-	public JLabel TituloApp;
+	public JMenu cenarios;
+	public DefaultListModel listarCenarios = new DefaultListModel();
+	public JList list;
+	public JLabel subtitulo;
 
 	/**
 	 * Launch the application.
@@ -48,6 +57,10 @@ public class Tela_Casa_Inteligente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	public void atualizarListaCenario(String nome) {
+		listarCenarios.addElement(nome);
+	}
+	
 	public Tela_Casa_Inteligente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -72,22 +85,61 @@ public class Tela_Casa_Inteligente extends JFrame {
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listar Usuário");
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
-		JMenu mnNewMenu_1 = new JMenu("Cenário");
-		menuBar.add(mnNewMenu_1);
+		JMenu cenario = new JMenu("Cenário");
+		menuBar.add(cenario);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Criar Cenário");
-		mnNewMenu_1.add(mntmNewMenuItem_2);
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String[] lugares = {"Banheiro", "Cozinha", "Sala", "Quarto"};
+				Arrays.sort(lugares);
+				String lugar = (String) JOptionPane.showInputDialog(null, "Escolha o cenário: ", "Escolhendo cenário", JOptionPane.QUESTION_MESSAGE, null, lugares, lugares[0]);
+				String nome = (String) JOptionPane.showInputDialog("Informe o nome do cenário: ");
+				String nomeLugar = lugar+"_"+nome;
+				try {
+					Cenario_Builder cb = new Cenario_Builder();
+					cb.nomeCenario(nomeLugar);
+					Cenario_Product c = cb.gerarCenario();
+					casa.adicionarCenario(c);
+					atualizarListaCenario(nomeLugar);
+//					list.setModel(listarCenarios);
+					JOptionPane.showMessageDialog(null, "O cenário "+c.getNome()+" foi criado!");
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, "Opa");
+				}
+			}
+		});
+		cenario.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listar Cenários");
-		mnNewMenu_1.add(mntmNewMenuItem_4);
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				list = new JList();
+				subtitulo.setText("Listando cenários");
+				list.setBounds(128, 101, 178, 136);
+				getContentPane().add(list);
+				list.setEnabled(false);
+				list.setModel(listarCenarios);
+			}
+		});
+		cenario.add(mntmNewMenuItem_4);
 		
-		JMenu mnNewMenu_2 = new JMenu("Ir para");
-		menuBar.add(mnNewMenu_2);
+		cenarios = new JMenu("Ir para");
+		menuBar.add(cenarios);
 		getContentPane().setLayout(null);
 		
-		TituloApp = new JLabel("Casa Inteligente");
-		TituloApp.setFont(new Font("Dialog", Font.BOLD, 28));
-		TituloApp.setBounds(89, 12, 299, 33);
-		getContentPane().add(TituloApp);
+		JLabel lblCasaInteligente = new JLabel("Casa Inteligente");
+		lblCasaInteligente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCasaInteligente.setFont(new Font("Dyuthi", Font.BOLD, 27));
+		lblCasaInteligente.setBounds(12, 12, 416, 40);
+		getContentPane().add(lblCasaInteligente);
+		
+		subtitulo = new JLabel("");
+		subtitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		subtitulo.setBounds(22, 46, 406, 40);
+		getContentPane().add(subtitulo);
+		
+		
 	}
 }
