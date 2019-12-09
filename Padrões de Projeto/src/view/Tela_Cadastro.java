@@ -116,12 +116,12 @@ public class Tela_Cadastro extends JDialog {
 							if(tci !=null) {
 							Usuario u = tci.casa.cadastrarUsuario(nome, idade, sexo);
 							JOptionPane.showMessageDialog(null, "Usuário foi cadastrado!\n"+u);
-//							tp.getUsuario(u);
+							tci.atualizarListaUsuarios(u);
 							dispose();
 							}
 						}
 						catch(Exception e) {
-							JOptionPane.showMessageDialog(null, "eita");
+							JOptionPane.showMessageDialog(null, e.getMessage());
 						}
 
 					}

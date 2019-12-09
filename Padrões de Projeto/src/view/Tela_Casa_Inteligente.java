@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import modelo.Cenario_Builder;
 import modelo.Cenario_Product;
 import modelo.Fachada;
+import modelo.Usuario;
+
 import javax.swing.AbstractListModel;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
@@ -34,7 +36,8 @@ public class Tela_Casa_Inteligente extends JFrame {
 	public Fachada casa = new Fachada();
 	public JMenu cenarios;
 	public DefaultListModel listarCenarios = new DefaultListModel();
-	public JList list;
+	public DefaultListModel listarUsuarios = new DefaultListModel();
+	public JList<String> list = new JList();
 	public JLabel subtitulo;
 
 	/**
@@ -61,6 +64,12 @@ public class Tela_Casa_Inteligente extends JFrame {
 		listarCenarios.addElement(nome);
 	}
 	
+	public void atualizarListaUsuarios(Usuario u) {
+		listarUsuarios.addElement(u.getNome());
+	}
+	
+	
+	
 	public Tela_Casa_Inteligente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -83,6 +92,17 @@ public class Tela_Casa_Inteligente extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listar Usuário");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				list.removeAll();
+				list.setBounds(128, 101, 178, 136);
+				getContentPane().add(list);
+				list.setModel(listarUsuarios);
+				list.setEnabled(false);
+				subtitulo.setText("Listando Usuários: ");
+				
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
 		JMenu cenario = new JMenu("Cenário");
@@ -115,12 +135,13 @@ public class Tela_Casa_Inteligente extends JFrame {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listar Cenários");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				list = new JList();
-				subtitulo.setText("Listando cenários");
+				list.removeAll();
 				list.setBounds(128, 101, 178, 136);
 				getContentPane().add(list);
-				list.setEnabled(false);
 				list.setModel(listarCenarios);
+				list.setEnabled(false);
+				subtitulo.setText("Listando Cenários: ");
+				
 			}
 		});
 		cenario.add(mntmNewMenuItem_4);
