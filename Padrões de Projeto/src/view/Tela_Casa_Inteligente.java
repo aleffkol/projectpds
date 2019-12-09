@@ -77,7 +77,7 @@ public class Tela_Casa_Inteligente extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, "Indo ao cenário "+c.getNome());
 				tcenario = new Tela_Cenario();
-//				tcenario
+				tcenario.titulo.setText(c.getNome());
 				tcenario.setVisible(true);
 				tcenario.pegarIntent(frame);
 			}

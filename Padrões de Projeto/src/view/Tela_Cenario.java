@@ -3,17 +3,22 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Tela_Cenario extends JFrame {
 
 	private JPanel contentPane;
 	public static Tela_Casa_Inteligente tci;
+	public JLabel titulo;
 
 	/**
 	 * Launch the application.
@@ -23,6 +28,7 @@ public class Tela_Cenario extends JFrame {
 			public void run() {
 				try {
 					Tela_Cenario frame = new Tela_Cenario();
+					frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,10 +52,19 @@ public class Tela_Cenario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel titulo = new JLabel("");
+		titulo = new JLabel("");
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setFont(new Font("Dialog", Font.BOLD, 20));
 		titulo.setBounds(0, 0, 438, 27);
 		contentPane.add(titulo);
+		
+		JButton btnNewButton = new JButton("voltar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnNewButton.setBounds(12, 231, 83, 27);
+		contentPane.add(btnNewButton);
 	}
 }
