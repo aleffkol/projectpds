@@ -10,15 +10,22 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import java.awt.List;
 
 public class Tela_Cenario extends JFrame {
 
 	private JPanel contentPane;
 	public static Tela_Casa_Inteligente tci;
 	public JLabel titulo;
+	public DefaultListModel listarDispositivos = new DefaultListModel();
+	public DefaultListModel listarDispositivosOn = new DefaultListModel();
+	public JList listDispositivo;
+	public JList listDispositivoOn;
 
 	/**
 	 * Launch the application.
@@ -46,7 +53,7 @@ public class Tela_Cenario extends JFrame {
 	
 	public Tela_Cenario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 587, 363);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,7 +71,31 @@ public class Tela_Cenario extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(12, 231, 83, 27);
+		btnNewButton.setBounds(482, 294, 83, 27);
 		contentPane.add(btnNewButton);
+		
+		listDispositivo = new JList();
+		listDispositivo.setBounds(26, 143, 133, 149);
+		contentPane.add(listDispositivo);
+		
+		JLabel lblNewLabel = new JLabel("Dispositivos");
+		lblNewLabel.setBounds(54, 104, 105, 27);
+		contentPane.add(lblNewLabel);
+		
+		listDispositivoOn = new JList();
+		listDispositivoOn.setBounds(261, 143, 133, 149);
+		contentPane.add(listDispositivoOn);
+		
+		JLabel lblDispositivosOn = new JLabel("Dispositivos ON");
+		lblDispositivosOn.setBounds(269, 104, 139, 27);
+		contentPane.add(lblDispositivosOn);
+		
+		JButton btnNewButton_1 = new JButton("ON");
+		btnNewButton_1.setBounds(61, 295, 60, 25);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnOff = new JButton("OFF");
+		btnOff.setBounds(302, 295, 60, 25);
+		contentPane.add(btnOff);
 	}
 }

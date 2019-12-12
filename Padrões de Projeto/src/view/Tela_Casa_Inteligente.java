@@ -26,6 +26,8 @@ import java.awt.BorderLayout;
 import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class Tela_Casa_Inteligente extends JFrame {
 
@@ -36,13 +38,20 @@ public class Tela_Casa_Inteligente extends JFrame {
 	Tela_Cadastro tc = new Tela_Cadastro();
 	Tela_Cenario tcenario = new Tela_Cenario();
 	public static Tela_Casa_Inteligente frame;
-	public Fachada casa = new Fachada();
+	public static Fachada casa = new Fachada();
 	public JMenu cenarios;
 	public DefaultListModel listarCenarios = new DefaultListModel();
 	public DefaultListModel listarUsuarios = new DefaultListModel();
-	public JList<String> list = new JList();
+	public static JList<String> list = new JList();
 	public JLabel subtitulo;
-
+	public JMenu mnNewMenu;
+	public JMenu cenario;
+	public JMenu mnModo;
+	public JTextField tfUsuario;
+	public JButton btLogout;
+	public JLabel lbTitulo;
+	public JButton btLogin;
+	public JLabel lbUsurio;
 	/**
 	 * Launch the application.
 	 */
@@ -63,12 +72,48 @@ public class Tela_Casa_Inteligente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
+
 	public void atualizarListaCenario(String nome) {
 		listarCenarios.addElement(nome);
 	}
 
 	public void atualizarListaUsuarios(Usuario u) {
 		listarUsuarios.addElement(u.getNome());
+	}
+	public void login(boolean tf) {
+
+		if(tf==true) {
+			lbTitulo.setText("Casa Inteligente");
+			tfUsuario.setText("");
+			lbUsurio.setVisible(false);
+			list.setVisible(true);
+			tfUsuario.setVisible(false);
+			mnNewMenu.setEnabled(true);
+			cenario.setEnabled(true);
+			cenarios.setEnabled(true);
+			mnModo.setEnabled(true);
+			btLogin.setVisible(false);
+			btLogout.setVisible(true);
+
+
+
+		}
+		else {
+			lbTitulo.setText("Login");
+			mnNewMenu.setEnabled(false);
+			lbUsurio.setVisible(true);
+			cenario.setEnabled(false);
+			cenarios.setEnabled(false);
+			mnModo.setEnabled(false);
+			btLogout.setVisible(false);
+			btLogin.setVisible(true);
+			tfUsuario.setVisible(true);
+			list.setVisible(false);
+
+		}
+
+
 	}
 
 	public void adicionandoCenario(Cenario_Product c) {
@@ -94,7 +139,8 @@ public class Tela_Casa_Inteligente extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnNewMenu = new JMenu("Usuario");
+		mnNewMenu = new JMenu("Usuario");
+		mnNewMenu.setEnabled(false);
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Criar Usuário");
@@ -122,7 +168,8 @@ public class Tela_Casa_Inteligente extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem_3);
 
-		JMenu cenario = new JMenu("Cenário");
+		cenario = new JMenu("Cenário");
+		cenario.setEnabled(false);
 		menuBar.add(cenario);
 
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Criar Cenário");
@@ -132,19 +179,24 @@ public class Tela_Casa_Inteligente extends JFrame {
 				Arrays.sort(lugares);
 				String lugar = (String) JOptionPane.showInputDialog(null, "Escolha o cenário: ", "Escolhendo cenário", JOptionPane.QUESTION_MESSAGE, null, lugares, lugares[0]);
 				String nome = (String) JOptionPane.showInputDialog("Informe o nome do cenário: ");
-				String nomeLugar = lugar+"_"+nome;
-				try {
-					Cenario_Builder cb = new Cenario_Builder();
-					cb.nomeCenario(nomeLugar);
-					Cenario_Product c = cb.gerarCenario();
-					casa.adicionarCenario(c);
-					adicionandoCenario(c);
-					atualizarListaCenario(nomeLugar);
-					//					list.setModel(listarCenarios);
-					JOptionPane.showMessageDialog(null, "O cenário "+c.getNome()+" foi criado!");
+				if(nome.equals("")==false) {
+					String nomeLugar = lugar+"_"+nome;
+					try {
+						Cenario_Builder cb = new Cenario_Builder();
+						cb.nomeCenario(nomeLugar);
+						Cenario_Product c = cb.gerarCenario();
+						casa.adicionarCenario(c);
+						adicionandoCenario(c);
+						atualizarListaCenario(nomeLugar);
+						//					list.setModel(listarCenarios);
+						JOptionPane.showMessageDialog(null, "O cenário "+c.getNome()+" foi criado!");
+					}
+					catch(Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
 				}
-				catch(Exception e) {
-					JOptionPane.showMessageDialog(null, "Opa");
+				else {
+					JOptionPane.showMessageDialog(null, "O nome não pode ser nulo");
 				}
 			}
 		});
@@ -165,20 +217,27 @@ public class Tela_Casa_Inteligente extends JFrame {
 		cenario.add(mntmNewMenuItem_4);
 
 		cenarios = new JMenu("Ir para");
+		cenarios.setEnabled(false);
 		menuBar.add(cenarios);
 
-		JMenu mnModo = new JMenu("Modo");
+		mnModo = new JMenu("Modo");
+		mnModo.setEnabled(false);
 		menuBar.add(mnModo);
 
 		JMenuItem mntmFesta = new JMenuItem("Festa");
+		mntmFesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Ainda não foi desenvolvido o modo festa para o aplicativo");
+			}
+		});
 		mnModo.add(mntmFesta);
 		getContentPane().setLayout(null);
 
-		JLabel lblCasaInteligente = new JLabel("Casa Inteligente");
-		lblCasaInteligente.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCasaInteligente.setFont(new Font("Dyuthi", Font.BOLD, 27));
-		lblCasaInteligente.setBounds(12, 12, 416, 40);
-		getContentPane().add(lblCasaInteligente);
+		lbTitulo = new JLabel("Login");
+		lbTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitulo.setFont(new Font("Dyuthi", Font.BOLD, 27));
+		lbTitulo.setBounds(12, 12, 416, 40);
+		getContentPane().add(lbTitulo);
 
 		subtitulo = new JLabel("");
 		subtitulo.setBackground(Color.RED);
@@ -186,6 +245,43 @@ public class Tela_Casa_Inteligente extends JFrame {
 		subtitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		subtitulo.setBounds(12, 40, 426, 40);
 		getContentPane().add(subtitulo);
+
+		tfUsuario = new JTextField();
+		tfUsuario.setBounds(168, 92, 124, 19);
+		getContentPane().add(tfUsuario);
+		tfUsuario.setColumns(10);
+
+		btLogin = new JButton("Fazer Login");
+		btLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(casa.realizarLogin(tfUsuario.getText())==true) {
+					JOptionPane.showMessageDialog(null, "Usuário logado com sucesso!");
+					login(true);
+
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Não existe este usuário cadastrado.");
+				}
+			}
+		});
+		btLogin.setBounds(172, 137, 114, 25);
+		getContentPane().add(btLogin);
+
+		btLogout = new JButton("Sair");
+		btLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				login(false);
+
+			}
+		});
+		btLogout.setBounds(12, 212, 69, 25);
+		getContentPane().add(btLogout);
+		
+		lbUsurio = new JLabel("Usuário:");
+		lbUsurio.setBounds(101, 92, 66, 15);
+		getContentPane().add(lbUsurio);
+		btLogout.setVisible(false);
+
 
 
 	}

@@ -12,9 +12,17 @@ public class Fachada {
 		this.usuarios = new ArrayList<Usuario>();
 		this.atuador = new Atuador();
 		this.cenarios = new ArrayList<Cenario_Product>();
+		this.usuarios.add(new Usuario_Masculino("adm", 1, null));
 	}
 	//Métodos
-
+	public boolean realizarLogin(String nome) {
+		for(Usuario u: usuarios) {
+			if(u.getNome().equalsIgnoreCase(nome)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public void adicionarUsuario(Usuario u) {
 		this.usuarios.add(u);
 	}
