@@ -36,7 +36,7 @@ public class Tela_Casa_Inteligente extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	Tela_Cadastro tc = new Tela_Cadastro();
-	Tela_Cenario tcenario = new Tela_Cenario();
+	static Tela_Cenario tcenario = new Tela_Cenario();
 	public static Tela_Casa_Inteligente frame;
 	public static Fachada casa = new Fachada();
 	public JMenu cenarios;
@@ -117,14 +117,14 @@ public class Tela_Casa_Inteligente extends JFrame {
 	}
 
 	public void adicionandoCenario(Cenario_Product c) {
+		Tela_Cenario telacenario = new Tela_Cenario();
 		JMenuItem cenario = new JMenuItem(c.getNome());
 		cenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Indo ao cenário "+c.getNome());
-				tcenario = new Tela_Cenario();
-				tcenario.titulo.setText(c.getNome());
-				tcenario.setVisible(true);
-				tcenario.pegarIntent(frame);
+				JOptionPane.showMessageDialog(null, "Indo ao cenário "+c.getNome());		
+				telacenario.titulo.setText(c.getNome());
+				telacenario.setVisible(true);
+				telacenario.pegarIntent(frame);
 			}
 		});
 		cenarios.add(cenario);
