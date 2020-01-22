@@ -94,7 +94,45 @@ public class Fachada {
 		cb.nomeCenario(nome);
 		return cb.gerarCenario();
 	}
-	public void adicionarDispositivoCenario(String nome) {
+	public String adicionarDispositivoCenario(String nome, Dispositivo d) {
+		String s = null;
+		s+=nome;
+		s+=d.getNome();
+		for (Cenario_Product c:cenarios) {
+			if(c.getNome().equals(nome)) {
+				
+				c.addDispositivo(d);
+				s = null;
+			}
+		}
+		return s;
+	}
+	
+	public Lampada criarLampada(String nome) {
+		Lampada lampada = new Lampada(nome);
+		return lampada;
+	}
+	public Som criarSom(String nome) {
+		Som som = new Som(nome);
+		return som;
+	}
+	public Ar_Condicionado criarAr(String nome) {
+		Ar_Condicionado ar = new Ar_Condicionado(nome);
+		return ar;
+	}
+	
+	public String ligarDispositivo(String nomeDispositivo, String nomeCenario) {
+		for(Cenario_Product c:cenarios) {
+			if(c.getNome().equals(nomeCenario)) {
+				for(Dispositivo d:c.getDispositivos()) {
+					if(d.getNome().equals(nomeDispositivo)) {
+						d.ligar();
+						return "Foi ligado";
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }

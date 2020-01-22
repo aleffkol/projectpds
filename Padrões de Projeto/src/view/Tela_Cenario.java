@@ -15,20 +15,17 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Ar_Condicionado;
 import modelo.Dispositivo;
-import modelo.Lampada;
-import modelo.Som;
-import javax.swing.ListSelectionModel;
 
 public class Tela_Cenario extends JFrame {
 
 	private JPanel contentPane;
 	public static Tela_Casa_Inteligente tci;
-	public JLabel titulo;
+	public JLabel titulo = new JLabel("");
 	public ArrayList<Dispositivo> dispositivosLista = new ArrayList<Dispositivo>();
 	public  DefaultListModel listarDispositivos = new DefaultListModel();
 	public  DefaultListModel listarDispositivosOn = new DefaultListModel();
@@ -37,6 +34,7 @@ public class Tela_Cenario extends JFrame {
 	public static int valorLampada = 0;
 	public static int valorSom = 0;
 	public static int valorAr = 0;
+	public static String nome = "a";
 
 	/**
 	 * Launch the application.
@@ -70,7 +68,6 @@ public class Tela_Cenario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		titulo = new JLabel("");
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setFont(new Font("Dialog", Font.BOLD, 20));
 		titulo.setBounds(0, 0, 438, 27);
@@ -105,9 +102,11 @@ public class Tela_Cenario extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(listDispositivo.getSelectedValue()!=null) {
-				listarDispositivosOn.addElement(listDispositivo.getSelectedValue());
-				listDispositivoOn.setModel(listarDispositivosOn);
-				JOptionPane.showMessageDialog(null, "O dispositivo "+listDispositivo.getSelectedValue()+" foi ligado.");}
+					String nomeDisp = listDispositivo.getSelectedValue().toString();
+					System.out.println(tci.casa.ligarDispositivo(nomeDisp, titulo.getText()));
+					listarDispositivosOn.addElement(listDispositivo.getSelectedValue());
+					listDispositivoOn.setModel(listarDispositivosOn);
+					JOptionPane.showMessageDialog(null, "O dispositivo "+listDispositivo.getSelectedValue()+" foi ligado.");}
 				else {
 					JOptionPane.showMessageDialog(null, "Nenhum dispositivo selecionado");
 				}
@@ -119,10 +118,11 @@ public class Tela_Cenario extends JFrame {
 		JButton btnOff = new JButton("OFF");
 		btnOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//listDispositivoOn.getSelectedValue();
+				listDispositivoOn.getSelectedValue();
+				JOptionPane.showMessageDialog(null, "O dispositivo "+listDispositivoOn.getSelectedValue()+" foi desligado.");
 				listarDispositivosOn.removeElement(listDispositivoOn.getSelectedValue());
 				listDispositivoOn.setModel(listarDispositivosOn);
-				JOptionPane.showMessageDialog(null, "O dispositivo "+listDispositivoOn.getSelectedValue()+" foi desligado.");
+				
 			}
 		});
 		btnOff.setBounds(302, 295, 60, 25);
@@ -133,29 +133,31 @@ public class Tela_Cenario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {				
 				String[] dispositivos = {"Ar-Condicionado", "Lampada", "Som"};
 				Arrays.sort(dispositivos);
+				Dispositivo d = null;
 				String dispositivo = (String) JOptionPane.showInputDialog(null, "Escolha o dispositivo: ", "Escolhendo dispositivo", JOptionPane.QUESTION_MESSAGE, null, dispositivos, dispositivos[0]);
 				if(dispositivo.equals("Lampada")) {
 					valorLampada++;
 					String valorString = Integer.toString(valorLampada);
-					Lampada lampada = new Lampada("Lampada");
-					dispositivosLista.add(lampada);
-					listarDispositivos.addElement(lampada.getNome()+valorLampada);
+					d = tci.casa.criarLampada(dispositivo + valorString);
+					dispositivosLista.add(d);
+					listarDispositivos.addElement(d.getNome());
 				}
 				else if(dispositivo.equals("Ar-Condicionado")) {
 					valorAr++;
 					String valorString = Integer.toString(valorAr);
-					Ar_Condicionado Ar_Condicionado = new Ar_Condicionado("Ar-Condicionado");
-					dispositivosLista.add(Ar_Condicionado);
-					listarDispositivos.addElement(Ar_Condicionado.getNome()+valorAr);
+					d = tci.casa.criarAr(dispositivo + valorString);
+					dispositivosLista.add(d);
+					listarDispositivos.addElement(d.getNome());
 				}
 				else if(dispositivo.equals("Som")) {
 					valorSom++;
 					String valorString = Integer.toString(valorSom);
-					Som som = new Som("Som");
-					dispositivosLista.add(som);
-					listarDispositivos.addElement(som.getNome()+valorSom);
+					d = tci.casa.criarSom(dispositivo + valorString);
+					dispositivosLista.add(d);
+					listarDispositivos.addElement(d.getNome());
 				}
 				listDispositivo.setModel(listarDispositivos);
+				System.out.println(tci.casa.adicionarDispositivoCenario(titulo.getName(), d));
 			}
 		});
 		btnAdicionar.setBounds(461, 257, 114, 25);

@@ -52,6 +52,7 @@ public class Tela_Casa_Inteligente extends JFrame {
 	public JLabel lbTitulo;
 	public JButton btLogin;
 	public JLabel lbUsurio;
+	public String nomeCenario;
 	/**
 	 * Launch the application.
 	 */
@@ -125,6 +126,7 @@ public class Tela_Casa_Inteligente extends JFrame {
 				telacenario.titulo.setText(c.getNome());
 				telacenario.setVisible(true);
 				telacenario.pegarIntent(frame);
+				telacenario.nome = c.getNome();
 			}
 		});
 		cenarios.add(cenario);
@@ -182,14 +184,20 @@ public class Tela_Casa_Inteligente extends JFrame {
 				if(nome.equals("")==false) {
 					String nomeLugar = lugar+"_"+nome;
 					try {
-						Cenario_Builder cb = new Cenario_Builder();
-						cb.nomeCenario(nomeLugar);
-						Cenario_Product c = cb.gerarCenario();
+						//Sem fachada
+						//Cenario_Builder cb = new Cenario_Builder();
+						//cb.nomeCenario(nomeLugar);
+						
+						//Criando pela fachada
+						Cenario_Product c = casa.criarCenario(nomeLugar);
 						casa.adicionarCenario(c);
+						
+						//Interface
 						adicionandoCenario(c);
 						atualizarListaCenario(nomeLugar);
-						//					list.setModel(listarCenarios);
+
 						JOptionPane.showMessageDialog(null, "O cenário "+c.getNome()+" foi criado!");
+						System.out.println(casa.getCenarios().get(0).getNome());
 					}
 					catch(Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());

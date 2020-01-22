@@ -19,6 +19,7 @@ public class Som extends Dispositivo{
 	public void setVolume(int volume) {
 		this.volume = volume;
 	}
+
 	
 	
 }

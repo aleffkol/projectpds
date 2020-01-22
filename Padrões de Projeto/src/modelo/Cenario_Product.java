@@ -40,6 +40,12 @@ public class Cenario_Product {
 	public void addSensor(Sensor s) {
 		sensores.add(s);
 	}
+
+	@Override
+	public String toString() {
+		return "Cenario_Product [nome=" + nome + "]";
+	}
+	
 	
 	
 	
