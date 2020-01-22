@@ -197,7 +197,7 @@ public class Tela_Casa_Inteligente extends JFrame {
 						atualizarListaCenario(nomeLugar);
 
 						JOptionPane.showMessageDialog(null, "O cenário "+c.getNome()+" foi criado!");
-						System.out.println(casa.getCenarios().get(0).getNome());
+						//Mostrar que adicionou System.out.println(casa.getCenarios().get(0).getNome());
 					}
 					catch(Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());

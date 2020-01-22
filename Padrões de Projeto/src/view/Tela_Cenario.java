@@ -34,7 +34,7 @@ public class Tela_Cenario extends JFrame {
 	public static int valorLampada = 0;
 	public static int valorSom = 0;
 	public static int valorAr = 0;
-	public static String nome = "a";
+	public String nome = "a";
 
 	/**
 	 * Launch the application.
@@ -102,8 +102,9 @@ public class Tela_Cenario extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(listDispositivo.getSelectedValue()!=null) {
+					System.out.println(nome);
 					String nomeDisp = listDispositivo.getSelectedValue().toString();
-					System.out.println(tci.casa.ligarDispositivo(nomeDisp, titulo.getText()));
+					tci.casa.ligarDispositivo(nomeDisp, titulo.getText());
 					listarDispositivosOn.addElement(listDispositivo.getSelectedValue());
 					listDispositivoOn.setModel(listarDispositivosOn);
 					JOptionPane.showMessageDialog(null, "O dispositivo "+listDispositivo.getSelectedValue()+" foi ligado.");}
@@ -157,7 +158,7 @@ public class Tela_Cenario extends JFrame {
 					listarDispositivos.addElement(d.getNome());
 				}
 				listDispositivo.setModel(listarDispositivos);
-				System.out.println(tci.casa.adicionarDispositivoCenario(titulo.getName(), d));
+				//System.out.println(tci.casa.adicionarDispositivoCenario(titulo.getName(), d));
 			}
 		});
 		btnAdicionar.setBounds(461, 257, 114, 25);

@@ -94,18 +94,14 @@ public class Fachada {
 		cb.nomeCenario(nome);
 		return cb.gerarCenario();
 	}
-	public String adicionarDispositivoCenario(String nome, Dispositivo d) {
-		String s = null;
-		s+=nome;
-		s+=d.getNome();
+	public void adicionarDispositivoCenario(String nome, Dispositivo d) {
+		
 		for (Cenario_Product c:cenarios) {
 			if(c.getNome().equals(nome)) {
 				
 				c.addDispositivo(d);
-				s = null;
 			}
 		}
-		return s;
 	}
 	
 	public Lampada criarLampada(String nome) {
@@ -121,18 +117,16 @@ public class Fachada {
 		return ar;
 	}
 	
-	public String ligarDispositivo(String nomeDispositivo, String nomeCenario) {
+	public void ligarDispositivo(String nomeDispositivo, String nomeCenario) {
 		for(Cenario_Product c:cenarios) {
 			if(c.getNome().equals(nomeCenario)) {
 				for(Dispositivo d:c.getDispositivos()) {
 					if(d.getNome().equals(nomeDispositivo)) {
 						d.ligar();
-						return "Foi ligado";
 					}
 				}
 			}
 		}
-		return null;
 	}
 
 }
